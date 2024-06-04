@@ -9,7 +9,7 @@ class ChildrenDua extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
       appBar: AppBar(
-        title: const Text('Children'),
+        title: const Text('ChildrenDua'),
       ),
     );
   }
