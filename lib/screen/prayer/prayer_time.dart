@@ -24,9 +24,6 @@ class _PrayerTimeState extends State<PrayerTime> {
     return FutureBuilder(
         future: getPTData(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
-          }
           return SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
