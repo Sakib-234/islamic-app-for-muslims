@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sakib/screen/prayer/prayer_time.dart';
-import 'package:sakib/service/prayer_time_api_service.dart';
 import 'package:sakib/utility/app_colors.dart';
 
 class Prayer extends StatefulWidget {
@@ -13,11 +12,6 @@ class Prayer extends StatefulWidget {
 class _PrayerState extends State<Prayer> {
   var currentTime = DateTime.now();
 
-  @override
-  void initState() {
-    getPTData();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +21,7 @@ class _PrayerState extends State<Prayer> {
           title: const Text("Prayer Time"),
           centerTitle: true,
         ),
-        body: FutureBuilder(
-            future: getPTData(),
-            builder: (context, snapshot) {
-              return Column(
+        body: Column(
                 children: [
                   SizedBox(
                       height: MediaQuery.sizeOf(context).height / 5.5,
@@ -65,7 +56,7 @@ class _PrayerState extends State<Prayer> {
                         child: const PrayerTime()),
                   )
                 ],
-              );
-            }));
+              )
+            );
   }
 }
