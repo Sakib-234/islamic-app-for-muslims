@@ -1,12 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:sakib/model/prayer_time_api_model.dart';
-import 'package:sakib/service/prayer_time_api_service.dart';
 import 'package:sakib/utility/app_colors.dart';
 
 class PrayerTime extends StatefulWidget {
-  const PrayerTime({super.key, this.time});
-
-  final PrayerTimeApiModel? time;
+  const PrayerTime({super.key});
 
   @override
   State<PrayerTime> createState() => _PrayerTimeState();
@@ -17,6 +17,20 @@ class _PrayerTimeState extends State<PrayerTime> {
   void initState() {
     getPTData();
     super.initState();
+  }
+  PrayerTimeApiModel? time;
+
+  String url =
+      'http://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=8';
+
+  Future getPTData() async {
+    http.Response response = await http.get(Uri.parse(url));
+
+    final data = jsonDecode(response.body);
+
+    time = PrayerTimeApiModel.fromJson(data);
+
+    return time;
   }
 
   @override
@@ -53,7 +67,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              '${time.data.timings.fajr} - ${time.data.timings.sunrise}',
+                              '${time!.data.timings.fajr} - ${time!.data.timings.sunrise}',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -84,7 +98,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              time.data.timings.sunrise,
+                              time!.data.timings.sunrise,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -115,7 +129,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              '${time.data.timings.dhuhr} - ${time.data.timings.asr}',
+                              '${time!.data.timings.dhuhr} - ${time!.data.timings.asr}',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -146,7 +160,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              time.data.timings.asr,
+                              time!.data.timings.asr,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -177,7 +191,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              time.data.timings.sunset,
+                              time!.data.timings.sunset,
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -208,7 +222,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              '${time.data.timings.maghrib} - ${time.data.timings.isha}',
+                              '${time!.data.timings.maghrib} - ${time!.data.timings.isha}',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
@@ -239,7 +253,7 @@ class _PrayerTimeState extends State<PrayerTime> {
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                             Text(
-                              '${time.data.timings.isha} - ${time.data.timings.midnight}',
+                              '${time!.data.timings.isha} - ${time!.data.timings.midnight}',
                               style: Theme.of(context).textTheme.titleLarge,
                             ),
                           ],
