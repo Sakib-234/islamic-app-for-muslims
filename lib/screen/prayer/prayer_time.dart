@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:sakib/model/prayer_time_api_model.dart';
+import 'package:sakib/service/prayer_time_api_service.dart';
 import 'package:sakib/utility/app_colors.dart';
 
 class PrayerTime extends StatefulWidget {
@@ -15,30 +16,29 @@ class PrayerTime extends StatefulWidget {
 class _PrayerTimeState extends State<PrayerTime> {
   @override
   void initState() {
-    getPTData();
+    isLoaded = loadPrayerTimes();
     super.initState();
   }
+
+  var isLoaded;
   PrayerTimeApiModel? time;
 
-  String url =
-      'http://api.aladhan.com/v1/timingsByCity?city=Dhaka&country=Bangladesh&method=8';
-
-  Future getPTData() async {
-    http.Response response = await http.get(Uri.parse(url));
-
-    final data = jsonDecode(response.body);
-
-    time = PrayerTimeApiModel.fromJson(data);
-
-    return time;
+  Future<bool> loadPrayerTimes() async {
+    try {
+      time = await getPTData(); //Imported from other file
+      return true;
+    } catch (e) {
+      print('Catched Error: $e');
+      return false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getPTData(),
+        future: isLoaded,
         builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
           return SingleChildScrollView(
