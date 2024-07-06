@@ -129,7 +129,7 @@ Widget buildOptionButton(BuildContext context) {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Calendar()));
+                    MaterialPageRoute(builder: (context) => const HijriCalendarPage()));
               },
               child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,

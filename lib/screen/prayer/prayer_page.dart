@@ -38,7 +38,7 @@ class _PrayerState extends State<Prayer> {
                                 fontSize: 50),
                           ),
                           const Text(
-                            'Jummah',
+                            'No Salat',
                             style: TextStyle(
                                 color: AppColors.textDefaultColor,
                                 fontSize: 24),
