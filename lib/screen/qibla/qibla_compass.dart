@@ -2,8 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import '../../utility/app_colors.dart';
-import '../../widget/option_app_bar.dart';
-import '../quran/loading_screen.dart';
 
 class QiblaCompass extends StatefulWidget {
   const QiblaCompass({super.key});
@@ -30,12 +28,13 @@ class _QiblaCompassState extends State<QiblaCompass>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryBackgroundColor,
-      appBar: optionAppBar('Qibla'),
       body: StreamBuilder(
         stream: FlutterQiblah.qiblahStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Loading();
+            return const Center(
+                child: CircularProgressIndicator(),
+            );
           }
 
           final qiblaDirection = snapshot.data;
@@ -53,7 +52,7 @@ class _QiblaCompassState extends State<QiblaCompass>
                 animation: animation!,
                 builder: (context, child) => Transform.rotate(
                   angle: animation!.value,
-                  child: Image.asset('assets/images/qibla.png'),
+                  child: Image.asset('assets/qibla.png'),
                 ),
               ),
             ),
