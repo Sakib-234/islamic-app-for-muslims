@@ -22,9 +22,9 @@ class _QiblaState extends State<Qibla> {
         hasPermission = true;
       } else {
         Permission.location.request().then(
-          (value) {
+              (value) {
             setState(
-              () {
+                  () {
                 hasPermission = (value == PermissionStatus.granted);
               },
             );
